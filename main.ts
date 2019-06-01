@@ -811,44 +811,7 @@ namespace newbit_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function BluetoothServoControl(uartData: string): void {
-        let servo1 = 0
-        let servo2 = 0
-        let servo3 = 0
-        let servo4 = 0
-        let servo6 = 0
-        let servo5 = 0
-        let index = 0
-        if (uartData.indexOf("*1-") != -1) {
-            index = uartData.indexOf("*1-");
-            servo1 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S1, servo1)
-        }
-        else if (uartData.indexOf("*2-") != -1) {
-            index = uartData.indexOf("*2-");
-            servo2 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S2, servo2)
-        }
-        else if (uartData.indexOf("*3-") != -1) {
-            index = uartData.indexOf("*3-");
-            servo3 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S3, servo3)
-        }
-        else if (uartData.indexOf("*4-") != -1) {
-            index = uartData.indexOf("*4-");
-            servo4 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S4, servo4)
-        }
-        else if (uartData.indexOf("*5-") != -1) {
-            index = uartData.indexOf("*5-");
-            servo5 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S5, servo5)
-        }
-        else if (uartData.indexOf("*6-") != -1) {
-            index = uartData.indexOf("*6-");
-            servo6 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S6, servo6)
-        }
-
+      
     }
     //% blockId=newbit_BluetoothModeSelect block="BluetoothModeSelect|%uartData"
     //% weight=92
