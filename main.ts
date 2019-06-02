@@ -1,4 +1,4 @@
-/*  2019.0527.14:37
+/*  2019.0601.19:21
 modified from duncan
 load dependency
 "newbit": "file:../pxt-newbit"
@@ -105,7 +105,7 @@ namespace newbit_传感器类 {
         //% blockId="NoVoice" block="未检测到"
         NoGet = 1
     }
-     export enum enOK {
+    export enum enOK {
         //% blockId="NotOK" block="异常"
         NotOK = 0,
         //% blockId="OK" block="正常"
@@ -372,7 +372,7 @@ namespace newbit_传感器类 {
         val = val + val_byte << 8;
         return val;
     }
-	 
+
     //% blockId=newbit_initColorSensor block="initColorSensor|value %value"
     //% weight=95
     //% blockGap=10
@@ -505,10 +505,10 @@ namespace newbit_传感器类 {
 
         pins.setPull(DigitalPin.P3, PinPullMode.PullUp);
         if (pins.digitalReadPin(DigitalPin.P3) == value) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
 
     }
@@ -524,10 +524,10 @@ namespace newbit_传感器类 {
 
         pins.setPull(DigitalPin.P9, PinPullMode.PullUp);
         if (pins.digitalReadPin(DigitalPin.P9) == value) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
 
     }
@@ -596,7 +596,7 @@ namespace newbit_传感器类 {
     //% color="#87CEEB"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
     function IR_Send(pin: DigitalPin): void {
-             IR_send_38k();
+        IR_send_38k();
     }
 }
 
@@ -664,6 +664,7 @@ namespace newbit_音乐类 {
 //% color="#0000CD" weight=21 icon="\uf185"
 
 namespace newbit_电机类 {
+
     //% blockId=newbit_Vibrator_Open block="Vibrator_Open"
     //% weight=100
     //% blockGap=10
@@ -709,7 +710,7 @@ namespace newbit_小车类 {
     const PRESCALE = 0xFE
     let initialized = false
     let g_mode = 0
-    
+
     export enum enMusic {
         dadadum = 0,
         entertainer,
@@ -759,14 +760,28 @@ namespace newbit_小车类 {
         S6
     }
     export enum CarRunState {
-       //% blockId="Car_Normal" block="正常"
+        //% blockId="Car_Normal" block="正常"
         Car_Normal = 0,
-	//% blockId="Car_XunJi" block="寻迹"
-        Car_XunJi =1, 
+        //% blockId="Car_XunJi" block="寻迹"
+        Car_XunJi = 1,
         //% blockId="Car_BiZhang" block="避障"  
         Car_BiZhang = 2
-       
-    }	
+
+    }
+    export enum MotorNum {
+        //% blockId="Motor0" block="电机1"
+        Motor0 = 0,
+        //% blockId="Motor1"  block="电机2"
+        Motor1 = 1
+
+
+    }
+    export enum MotorDir {
+        //% blockId="clockwise" block="正转"
+        clockwise = 0,
+        //% blockId="anticlockwise" block="反转"
+        anticlockwise = 1
+    }
     export enum CarState {
         //% blockId="Car_Run" block="前行"
         Car_Run = 1,
@@ -798,7 +813,7 @@ namespace newbit_小车类 {
         } else if (uartData == "*CD") {
             CarCtrl(CarState.Car_SpinRight)
         } else if (uartData == "*CE") {
-             CarCtrl(CarState.Car_Stop)
+            CarCtrl(CarState.Car_Stop)
         } else if (uartData == "*CADD") {
             CarCtrl(CarState.Car_Stop)
         } else if (uartData == "*CSD") {
@@ -811,7 +826,44 @@ namespace newbit_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function BluetoothServoControl(uartData: string): void {
-      
+        let servo1 = 0
+        let servo2 = 0
+        let servo3 = 0
+        let servo4 = 0
+        let servo6 = 0
+        let servo5 = 0
+        let index = 0
+        if (uartData.indexOf("*1-") != -1) {
+            index = uartData.indexOf("*1-");
+            servo1 = parseInt(uartData.substr(3, uartData.length - 3))
+            Servo_Car(enServo.S1, servo1)
+        }
+        else if (uartData.indexOf("*2-") != -1) {
+            index = uartData.indexOf("*2-");
+            servo2 = parseInt(uartData.substr(3, uartData.length - 3))
+            Servo_Car(enServo.S2, servo2)
+        }
+        else if (uartData.indexOf("*3-") != -1) {
+            index = uartData.indexOf("*3-");
+            servo3 = parseInt(uartData.substr(3, uartData.length - 3))
+            Servo_Car(enServo.S3, servo3)
+        }
+        else if (uartData.indexOf("*4-") != -1) {
+            index = uartData.indexOf("*4-");
+            servo4 = parseInt(uartData.substr(3, uartData.length - 3))
+            Servo_Car(enServo.S4, servo4)
+        }
+        else if (uartData.indexOf("*5-") != -1) {
+            index = uartData.indexOf("*5-");
+            servo5 = parseInt(uartData.substr(3, uartData.length - 3))
+            Servo_Car(enServo.S5, servo5)
+        }
+        else if (uartData.indexOf("*6-") != -1) {
+            index = uartData.indexOf("*6-");
+            servo6 = parseInt(uartData.substr(3, uartData.length - 3))
+            Servo_Car(enServo.S6, servo6)
+        }
+
     }
     //% blockId=newbit_BluetoothModeSelect block="BluetoothModeSelect|%uartData"
     //% weight=92
@@ -821,18 +873,18 @@ namespace newbit_小车类 {
     export function BluetoothModeSelect(uartData: string): number {
         if (uartData == "*CM0") {
             g_mode = 1
-	    return CarRunState.Car_XunJi
+            return CarRunState.Car_XunJi
         } else if (uartData == "*CM1") {
             g_mode = 2
-	    return CarRunState.Car_BiZhang
+            return CarRunState.Car_BiZhang
         } else if (uartData == "*CM9") {
             g_mode = 0
-	    return CarRunState.Car_Normal
+            return CarRunState.Car_Normal
         }
-	  else{
-	      g_mode = 0
-	      return CarRunState.Car_Normal
-	  }
+        else {
+            g_mode = 0
+            return CarRunState.Car_Normal
+        }
     }
     function i2cwrite_(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -886,6 +938,8 @@ namespace newbit_小车类 {
         buf[4] = (off >> 8) & 0xff;
         pins.i2cWriteBuffer(PCA9685_ADD, buf);
     }
+
+
     function Car_run(speed: number) {
         speed = speed * 16; // map 350 to 4096
         if (speed >= 4096) {
@@ -1081,32 +1135,32 @@ namespace newbit_小车类 {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
     export function Avoid_Sensor(value: enAvoidState): boolean {
         let temp: boolean = false;
-   //     pins.digitalWritePin(DigitalPin.P9, 0);
+        //     pins.digitalWritePin(DigitalPin.P9, 0);
         switch (value) {
             case enAvoidState.OBSTACLE: {
                 if (pins.analogReadPin(AnalogPin.P1) < 800) {
                     temp = true;
-               //   setPwm(8, 0, 0);
+                    //   setPwm(8, 0, 0);
                 }
                 else {
                     temp = false;
-               //     setPwm(8, 0, 4095);
+                    //     setPwm(8, 0, 4095);
                 }
                 break;
             }
             case enAvoidState.NOOBSTACLE: {
                 if (pins.analogReadPin(AnalogPin.P1) > 800) {
                     temp = true;
-               //     setPwm(8, 0, 4095);
+                    //     setPwm(8, 0, 4095);
                 }
                 else {
                     temp = false;
-                //    setPwm(8, 0, 0);
+                    //    setPwm(8, 0, 0);
                 }
                 break;
             }
         }
-    //    pins.digitalWritePin(DigitalPin.P9, 1);
+        //    pins.digitalWritePin(DigitalPin.P9, 1);
         return temp;
     }
     //% blockId=newbit_Line_Sensor block="Line_Sensor|direct %direct|value %value"
@@ -1183,7 +1237,37 @@ namespace newbit_小车类 {
             case CarState.Car_SpinRight: Car_spinright(speed); break;
         }
     }
+    //% blockId=newbit_MotorRun block="MotorRun|%index0|%index1|speed%speed"
+    //% weight=93
+    //% blockGap=10
+    //% speed.min=0 speed.max=255
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
+    export function MotorRun(index0: MotorNum, index1: MotorDir, speed: number) {
+        if (index0 == MotorNum.Motor0) {
+            if (index1 == MotorDir.clockwise) {
+                setPwm(12, 0, speed);
+                setPwm(13, 0, 0);
 
+            }
+            else if (index1 == MotorDir.anticlockwise) {
+                setPwm(12, 0, 0);
+                setPwm(13, 0, speed);
 
+            }
+        }
+        else if (index0 == MotorNum.Motor1) {
+            if (index1 == MotorDir.clockwise) {
+                setPwm(14, 0, speed);
+                setPwm(15, 0, 0);
+
+            }
+            else if (index1 == MotorDir.anticlockwise) {
+                setPwm(15, 0, speed);
+                setPwm(14, 0, 0);
+
+            }
+
+        }
+    }
 }
- 
