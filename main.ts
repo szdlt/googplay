@@ -1128,7 +1128,7 @@ namespace newbit_小车类 {
         while (value_past != value) {
             if (value_past > value) {
 
-                value_past = value_past - speed > value ? value_past -= speed : value_past--;
+                value_past - speed > value ? value_past -= speed : value_past--;
                 let us = (value_past * 1800 / 180 + 600); // 0.6 ~ 2.4
                 let pwm = us * 4096 / 20000;
                 setPwm(num + 2, 0, pwm);
@@ -1137,7 +1137,7 @@ namespace newbit_小车类 {
             }
             else if (value_past < value) {
 
-                value_past = value_past + speed < value ? value_past += speed : value_past++;
+                value_past + speed  < value ? value_past += speed : value_past++;
                 let us = (value_past * 1800 / 180 + 600); // 0.6 ~ 2.4
                 let pwm = us * 4096 / 20000;
                 setPwm(num + 2, 0, pwm);
