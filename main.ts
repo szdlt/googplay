@@ -1,4 +1,4 @@
-/*  2019.0602.17:59
+/*  2019.0603.14:23
 modified from duncan
 load dependency
 "newbit": "file:../pxt-newbit"
@@ -51,6 +51,14 @@ namespace newbit_显示类 {
             setPixelRGB(Lights.Light2, QbitRGBColors.Violet)
             showLight()
         }
+	  else if (uartData == "*CL21") {
+            setPixelRGB(Lights.Light1, QbitRGBColors.White)
+            setPixelRGB(Lights.Light2, QbitRGBColors.White)
+            showLight()
+        }
+	  else if (uartData == "*CL20") {
+           clearLight()
+        }   
     }
 
     //% blockId="setBrightness" block="set brightness %brightness"
@@ -639,8 +647,11 @@ namespace newbit_音乐类 {
         else if (uartData == "*C7") {
             music.ringTone(932)
         }
-        else if (uartData == "*C8") {
+        else if (uartData == "*C0") {
             pins.digitalWritePin(DigitalPin.P0, 0)
+        }
+	else if (uartData == "*C8") {
+           music.beginMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
         }
 
     }
@@ -1267,27 +1278,26 @@ namespace newbit_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function MotorRun(index0: MotorNum, index1: MotorDir, speed: number) {
-	    let speed_l = speed * 16;
         if (index0 == MotorNum.Motor0) {
             if (index1 == MotorDir.clockwise) {
-                setPwm(12, 0, speed_l);
+                setPwm(12, 0, speed);
                 setPwm(13, 0, 0);
 
             }
             else if (index1 == MotorDir.anticlockwise) {
                 setPwm(12, 0, 0);
-                setPwm(13, 0, speed_l);
+                setPwm(13, 0, speed);
 
             }
         }
         else if (index0 == MotorNum.Motor1) {
             if (index1 == MotorDir.clockwise) {
-                setPwm(14, 0, speed_l);
+                setPwm(14, 0, speed);
                 setPwm(15, 0, 0);
 
             }
             else if (index1 == MotorDir.anticlockwise) {
-                setPwm(15, 0, speed_l);
+                setPwm(15, 0, speed);
                 setPwm(14, 0, 0);
 
             }
