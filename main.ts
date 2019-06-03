@@ -1,9 +1,11 @@
-/*  2019.0603.14:23
+/*  2019.0603.20:05
 modified from duncan
 load dependency
 "newbit": "file:../pxt-newbit"
 */
 //% color="#C814B8" weight=25 icon="\uf1d4"
+
+let GotAppCMD = false
 namespace newbit_显示类 {
 
     let lhRGBLight: QbitRGBLight.LHQbitRGBLight;
@@ -21,46 +23,59 @@ namespace newbit_显示类 {
     //% blockGap=10
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
 
-    export function SevenColorLED(uartData: string) {
-        if (uartData == "*CL01") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Red)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Red)
-            showLight()
-        } else if (uartData == "*CL02") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Orange)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Orange)
-            showLight()
-        } else if (uartData == "*CL03") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Yellow)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Yellow)
-            showLight()
-        } else if (uartData == "*CL04") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Green)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Green)
-            showLight()
-        } else if (uartData == "*CL05") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Indigo)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Indigo)
-            showLight()
-        } else if (uartData == "*CL06") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Blue)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Blue)
-            showLight()
-        } else if (uartData == "*CL07") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.Violet)
-            setPixelRGB(Lights.Light2, QbitRGBColors.Violet)
-            showLight()
-        }
-	  else if (uartData == "*CL21") {
-            setPixelRGB(Lights.Light1, QbitRGBColors.White)
-            setPixelRGB(Lights.Light2, QbitRGBColors.White)
-            showLight()
-        }
-	  else if (uartData == "*CL20") {
-           clearLight()
-        }   
-    }
+    export function SevenColorLED(uartData: string): void {
 
+        if (GotAppCMD == false) {
+
+            if (uartData == "*CL01") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Red)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Red)
+                showLight()
+                GotAppCMD = true;
+            } else if (uartData == "*CL02") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Orange)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Orange)
+                showLight()
+                GotAppCMD = true;
+            } else if (uartData == "*CL03") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Yellow)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Yellow)
+                showLight()
+                GotAppCMD = true;
+            } else if (uartData == "*CL04") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Green)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Green)
+                showLight()
+                GotAppCMD = true;
+            } else if (uartData == "*CL05") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Indigo)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Indigo)
+                showLight()
+                GotAppCMD = true;
+            } else if (uartData == "*CL06") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Blue)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Blue)
+                showLight()
+                GotAppCMD = true;
+            } else if (uartData == "*CL07") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.Violet)
+                setPixelRGB(Lights.Light2, QbitRGBColors.Violet)
+                showLight()
+                GotAppCMD = true;
+            }
+            else if (uartData == "*CL21") {
+                setPixelRGB(Lights.Light1, QbitRGBColors.White)
+                setPixelRGB(Lights.Light2, QbitRGBColors.White)
+                showLight()
+                GotAppCMD = true;
+            }
+            else if (uartData == "*CL20") {
+                clearLight()
+                GotAppCMD = true;
+            }
+
+        }
+    }
     //% blockId="setBrightness" block="set brightness %brightness"
     //% weight=92
     export function setBrightness(brightness: number): void {
@@ -626,34 +641,44 @@ namespace newbit_音乐类 {
     //% color="#D2691E"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function BluetoothMusic(uartData: string): void {
-        if (uartData == "*C1") {
-            music.ringTone(262)
+        if (GotAppCMD == false) {
+            if (uartData == "*C1") {
+                music.ringTone(262)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C2") {
+                music.ringTone(311)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C3") {
+                music.ringTone(440)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C4") {
+                music.ringTone(175)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C5") {
+                music.ringTone(622)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C6") {
+                music.ringTone(784)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C7") {
+                music.ringTone(932)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C0") {
+                pins.digitalWritePin(DigitalPin.P0, 0)
+                GotAppCMD = true;
+            }
+            else if (uartData == "*C8") {
+                music.beginMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
+                GotAppCMD = true;
+            }
         }
-        else if (uartData == "*C2") {
-            music.ringTone(311)
-        }
-        else if (uartData == "*C3") {
-            music.ringTone(440)
-        }
-        else if (uartData == "*C4") {
-            music.ringTone(175)
-        }
-        else if (uartData == "*C5") {
-            music.ringTone(622)
-        }
-        else if (uartData == "*C6") {
-            music.ringTone(784)
-        }
-        else if (uartData == "*C7") {
-            music.ringTone(932)
-        }
-        else if (uartData == "*C0") {
-            pins.digitalWritePin(DigitalPin.P0, 0)
-        }
-	else if (uartData == "*C8") {
-           music.beginMelody(music.builtInMelody(Melodies.BaDing), MelodyOptions.Once)
-        }
-
     }
     //% blockId=newbit_Buzzer block="Buzzer|pin %pin|value %value"
     //% weight=100
@@ -815,20 +840,29 @@ namespace newbit_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function BluetoothCarControl(uartData: string): void {
-        if (uartData == "*CA") {
-            CarCtrl(CarState.Car_Run)
-        } else if (uartData == "*CB") {
-            CarCtrl(CarState.Car_Back)
-        } else if (uartData == "*CC") {
-            CarCtrl(CarState.Car_SpinLeft)
-        } else if (uartData == "*CD") {
-            CarCtrl(CarState.Car_SpinRight)
-        } else if (uartData == "*CE") {
-            CarCtrl(CarState.Car_Stop)
-        } else if (uartData == "*CADD") {
-            CarCtrl(CarState.Car_Stop)
-        } else if (uartData == "*CSD") {
-            CarCtrl(CarState.Car_Stop)
+        if (GotAppCMD == false) {
+            if (uartData == "*CA") {
+                CarCtrl(CarState.Car_Run)
+                GotAppCMD = true;
+            } else if (uartData == "*CB") {
+                CarCtrl(CarState.Car_Back)
+                GotAppCMD = true;
+            } else if (uartData == "*CC") {
+                CarCtrl(CarState.Car_SpinLeft)
+                GotAppCMD = true;
+            } else if (uartData == "*CD") {
+                CarCtrl(CarState.Car_SpinRight)
+                GotAppCMD = true;
+            } else if (uartData == "*CE") {
+                CarCtrl(CarState.Car_Stop)
+                GotAppCMD = true;
+            } else if (uartData == "*CADD") {
+                CarCtrl(CarState.Car_Stop)
+                GotAppCMD = true;
+            } else if (uartData == "*CSD") {
+                CarCtrl(CarState.Car_Stop)
+                GotAppCMD = true;
+            }
         }
     }
     //% blockId=newbit_BluetoothServoControl block="BluetoothServoControl|%uartData"
@@ -837,44 +871,51 @@ namespace newbit_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function BluetoothServoControl(uartData: string): void {
-        let servo1 = 0
-        let servo2 = 0
-        let servo3 = 0
-        let servo4 = 0
-        let servo6 = 0
-        let servo5 = 0
-        let index = 0
-        if (uartData.indexOf("*1-") != -1) {
-            index = uartData.indexOf("*1-");
-            servo1 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S1, servo1 ,10)
+        if (GotAppCMD == false) {
+            let servo1 = 0
+            let servo2 = 0
+            let servo3 = 0
+            let servo4 = 0
+            let servo6 = 0
+            let servo5 = 0
+            let index = 0
+            if (uartData.indexOf("*1-") != -1) {
+                index = uartData.indexOf("*1-");
+                servo1 = parseInt(uartData.substr(3, uartData.length - 3))
+                Servo_Car(enServo.S1, servo1, 10)
+                GotAppCMD = true;
+            }
+            else if (uartData.indexOf("*2-") != -1) {
+                index = uartData.indexOf("*2-");
+                servo2 = parseInt(uartData.substr(3, uartData.length - 3))
+                Servo_Car(enServo.S2, servo2, 10)
+                GotAppCMD = true;
+            }
+            else if (uartData.indexOf("*3-") != -1) {
+                index = uartData.indexOf("*3-");
+                servo3 = parseInt(uartData.substr(3, uartData.length - 3))
+                Servo_Car(enServo.S3, servo3, 10)
+                GotAppCMD = true;
+            }
+            else if (uartData.indexOf("*4-") != -1) {
+                index = uartData.indexOf("*4-");
+                servo4 = parseInt(uartData.substr(3, uartData.length - 3))
+                Servo_Car(enServo.S4, servo4, 10)
+                GotAppCMD = true;
+            }
+            else if (uartData.indexOf("*5-") != -1) {
+                index = uartData.indexOf("*5-");
+                servo5 = parseInt(uartData.substr(3, uartData.length - 3))
+                Servo_Car(enServo.S5, servo5, 10)
+                GotAppCMD = true;
+            }
+            else if (uartData.indexOf("*6-") != -1) {
+                index = uartData.indexOf("*6-");
+                servo6 = parseInt(uartData.substr(3, uartData.length - 3))
+                Servo_Car(enServo.S6, servo6, 10)
+                GotAppCMD = true;
+            }
         }
-        else if (uartData.indexOf("*2-") != -1) {
-            index = uartData.indexOf("*2-");
-            servo2 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S2, servo2, 10)
-        }
-        else if (uartData.indexOf("*3-") != -1) {
-            index = uartData.indexOf("*3-");
-            servo3 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S3, servo3, 10)
-        }
-        else if (uartData.indexOf("*4-") != -1) {
-            index = uartData.indexOf("*4-");
-            servo4 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S4, servo4, 10)
-        }
-        else if (uartData.indexOf("*5-") != -1) {
-            index = uartData.indexOf("*5-");
-            servo5 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S5, servo5, 10)
-        }
-        else if (uartData.indexOf("*6-") != -1) {
-            index = uartData.indexOf("*6-");
-            servo6 = parseInt(uartData.substr(3, uartData.length - 3))
-            Servo_Car(enServo.S6, servo6, 10)
-        }
-
     }
     //% blockId=newbit_BluetoothModeSelect block="BluetoothModeSelect|%uartData"
     //% weight=92
@@ -882,20 +923,26 @@ namespace newbit_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function BluetoothModeSelect(uartData: string): number {
-        if (uartData == "*CM0") {
-            g_mode = 1
-            return CarRunState.Car_XunJi
-        } else if (uartData == "*CM1") {
-            g_mode = 2
-            return CarRunState.Car_BiZhang
-        } else if (uartData == "*CM9") {
-            g_mode = 0
-            return CarRunState.Car_Normal
+        if (GotAppCMD == false) {
+            if (uartData == "*CM0") {
+                g_mode = 1
+                GotAppCMD = true;
+                return CarRunState.Car_XunJi
+            } else if (uartData == "*CM1") {
+                g_mode = 2
+                GotAppCMD = true;
+                return CarRunState.Car_BiZhang
+            } else if (uartData == "*CM9") {
+                g_mode = 0
+                GotAppCMD = true;
+                return CarRunState.Car_Normal
+            }
+            else {
+                g_mode = 0
+                return CarRunState.Car_Normal
+            }
         }
-        else {
-            g_mode = 0
-            return CarRunState.Car_Normal
-        }
+        return CarRunState.Car_Normal
     }
     function i2cwrite_(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -949,7 +996,6 @@ namespace newbit_小车类 {
         buf[4] = (off >> 8) & 0xff;
         pins.i2cWriteBuffer(PCA9685_ADD, buf);
     }
-
 
     function Car_run(speed: number) {
         speed = speed * 16; // map 350 to 4096
@@ -1148,7 +1194,7 @@ namespace newbit_小车类 {
             }
             else if (value_past < value) {
 
-                value_past + speed  < value ? value_past += speed : value_past++;
+                value_past + speed < value ? value_past += speed : value_past++;
                 let us = (value_past * 1800 / 180 + 600); // 0.6 ~ 2.4
                 let pwm = us * 4096 / 20000;
                 setPwm(num + 2, 0, pwm);
@@ -1282,27 +1328,38 @@ namespace newbit_小车类 {
             if (index1 == MotorDir.clockwise) {
                 setPwm(12, 0, speed);
                 setPwm(13, 0, 0);
-
             }
             else if (index1 == MotorDir.anticlockwise) {
                 setPwm(12, 0, 0);
                 setPwm(13, 0, speed);
-
             }
         }
         else if (index0 == MotorNum.Motor1) {
             if (index1 == MotorDir.clockwise) {
                 setPwm(14, 0, speed);
                 setPwm(15, 0, 0);
-
             }
             else if (index1 == MotorDir.anticlockwise) {
                 setPwm(15, 0, speed);
                 setPwm(14, 0, 0);
-
             }
-
         }
     }
+    //% blockId=newbit_StartAPPParse block="StartAPPParse"
+    //% weight=93
+    //% blockGap=10
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
+    export function StartAPPParse(): void {
+
+    }
+
+    //% blockId=newbit_EndAPPParse block="EndAPPParse"
+    //% weight=93
+    //% blockGap=10
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
+    export function EndAPPParse(): void {
+        GotAppCMD = false;
+    }
 }
- 
