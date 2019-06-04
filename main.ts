@@ -3,9 +3,8 @@ modified from duncan
 load dependency
 "newbit": "file:../pxt-newbit"
 */
-//% color="#C814B8" weight=25 icon="\uf1d4"
-
 let GotAppCMD = false
+//% color="#C814B8" weight=25 icon="\uf1d4"
 namespace newbit_显示类 {
 
     let lhRGBLight: QbitRGBLight.LHQbitRGBLight;
